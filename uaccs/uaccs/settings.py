@@ -74,7 +74,7 @@ WSGI_APPLICATION = 'uaccs.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-## Setting environment variables to access psql backend
+## Setting environment variables to access psql backend, migrate to cloud secret manager for production
 
 DATABASES = {
     "default": {
