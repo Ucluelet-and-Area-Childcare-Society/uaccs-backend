@@ -1,2 +1,8 @@
-venv/
+# Environment
 .env
+venv/
+.venv/
+
+# Byte-compiled / optimized files
+__pycache__/
+
