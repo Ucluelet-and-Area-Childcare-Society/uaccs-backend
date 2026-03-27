@@ -13,7 +13,6 @@ cd uaccs-backend
 
 **Windows:**
 ```bash
-cd backend
 python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
@@ -21,7 +20,6 @@ pip install -r requirements.txt
 
 **Mac:**
 ```bash
-cd backend
 python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
@@ -35,5 +33,6 @@ pip install -r requirements.txt
   Ensure you are at the folder ./uaccs-backend/uaccs for *Mac/Linux*, and .\uaccs-backend\uaccs for *Windows*.
 
 ```bash
+cd uaccs
 python manage.py migrate
 ```
