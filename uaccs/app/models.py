@@ -48,6 +48,9 @@ class Parent(TimeStampedModel):
     email = models.EmailField(max_length=254)
     # children already specified Child class, no need to redefine
 
+    def __str__(self):
+        return self.name
+
 # Child Model (Many-to-Many Relationship with Parent)
 class Child(TimeStampedModel):
     """
@@ -63,6 +66,9 @@ class Child(TimeStampedModel):
     dob = models.DateField()
     starting_date = models.DateField()
     parents = models.ManyToManyField(Parent, related_name='children')
+
+    def __str__(self):
+        return self.name
 
 # Resource Model (for generic site resources, i.e. photos, urls etc)
 class Resource(TimeStampedModel):
