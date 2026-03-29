@@ -12,6 +12,10 @@ class StaffTestCase(TestCase):
 class ChildTestCase(TestCase):
     pass
 
-# Tests for parent model:
+# Tests for parent model
 class ParentTestCase(TestCase):
+    pass
+
+# Tests for resource model
+class ResourceTestCase(TestCase):
     pass
