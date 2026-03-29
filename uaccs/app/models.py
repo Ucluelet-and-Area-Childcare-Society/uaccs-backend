@@ -7,7 +7,11 @@ class TimeStampedModel(models.Model):
     Abstract base class that tracks when models are created and updated
     (useful for debudding)
     """
-    pass
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
 
 # Staff Model
 class Staff(TimeStampedModel):
