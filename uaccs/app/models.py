@@ -17,7 +17,7 @@ class Staff(TimeStampedModel):
         - bio
         - email (might not need now, adding as redundancy) (for internal use only)
         - photo (image field url tied to cloud storage)
-        - role (i.e. position within the company)
+        - role (i.e. position within the company) (choose from set of choices?)
     """
     pass
 
