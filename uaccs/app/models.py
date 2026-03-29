@@ -45,5 +45,13 @@ class Parent(TimeStampedModel):
     """
     pass
 
+# Resource Model (for generic site resources, i.e. photos, urls etc)
+class Resource(TimeStampedModel):
+    """
+    model to store generic website resources that dont fall into above models.
+    Anything like photos, files, URLS, other static web resources on the site.
+    """
+    pass
+
 
 
