@@ -31,6 +31,18 @@ class Staff(TimeStampedModel):
 
     def __str__(self):
         return self.name
+    
+
+# Parent Model (Many-to-Many Relationship with Child)
+class Parent(TimeStampedModel):
+    """
+    model defines the following attributes:
+        - name
+        - phone number
+        - email address
+        - child(s) names
+    """
+    pass
 
 # Child Model (Many-to-Many Relationship with Parent)
 class Child(TimeStampedModel):
@@ -43,19 +55,10 @@ class Child(TimeStampedModel):
         - parent(s) email addresses
         - starting date (date childcare required)
     """
-    pass
-
-
-# Parent Model (Many-to-Many Relationship with Child)
-class Parent(TimeStampedModel):
-    """
-    model defines the following attributes:
-        - name
-        - phone number
-        - email address
-        - child(s) names
-    """
-    pass
+    name = models.CharField(max_length=50)
+    dob = models.DateField()
+    starting_date = models.DateField()
+    parents = models.ManyToManyField(Parent, related_name='children')
 
 # Resource Model (for generic site resources, i.e. photos, urls etc)
 class Resource(TimeStampedModel):
