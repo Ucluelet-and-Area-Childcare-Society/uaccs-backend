@@ -23,7 +23,14 @@ class Staff(TimeStampedModel):
         - photo (image field url tied to cloud storage)
         - role (i.e. position within the company) (choose from set of choices?)
     """
-    pass
+    name = models.CharField(max_length=50)
+    bio = models.TextField()
+    email = models.EmailField(max_length=254)
+    role = models.CharField(max_length=100) # may make enumeration for predefined choices
+    photo = models.ImageField() # missing upload_to parameter (set up object storage)
+
+    def __str__(self):
+        return self.name
 
 # Child Model (Many-to-Many Relationship with Parent)
 class Child(TimeStampedModel):
@@ -34,7 +41,8 @@ class Child(TimeStampedModel):
         - parent(s) names
         - parent(s) phone numbers
         - parent(s) email addresses
-        - starting date (date childcare required)"""
+        - starting date (date childcare required)
+    """
     pass
 
 
