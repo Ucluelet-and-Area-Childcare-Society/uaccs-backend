@@ -43,7 +43,10 @@ class Parent(TimeStampedModel):
         - email address
         - child(s) names
     """
-    pass
+    name = models.CharField(max_length=50)
+    phone_number = PhoneNumberField()
+    email = models.EmailField(max_length=254)
+    # children already specified Child class, no need to redefine
 
 # Child Model (Many-to-Many Relationship with Parent)
 class Child(TimeStampedModel):
