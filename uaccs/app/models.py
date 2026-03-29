@@ -21,7 +21,7 @@ class Staff(TimeStampedModel):
     """
     pass
 
-# Child Model
+# Child Model (Many-to-Many Relationship with Parent)
 class Child(TimeStampedModel):
     """
     Model defines the following attributes:
