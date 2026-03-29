@@ -14,6 +14,7 @@ class TimeStampedModel(models.Model):
     class Meta:
         abstract = True
 
+
 # Staff Model
 class Staff(TimeStampedModel):
     """
@@ -51,6 +52,7 @@ class Parent(TimeStampedModel):
     def __str__(self):
         return self.name
 
+
 # Child Model (Many-to-Many Relationship with Parent)
 class Child(TimeStampedModel):
     """
@@ -69,6 +71,7 @@ class Child(TimeStampedModel):
 
     def __str__(self):
         return self.name
+
 
 # Resource Model (for generic site resources, i.e. photos, urls etc)
 class Resource(TimeStampedModel):
