@@ -27,10 +27,22 @@ class Child(TimeStampedModel):
     Model defines the following attributes:
         - name
         - date of birth (date field)
-        - aprent(s) names
+        - parent(s) names
         - parent(s) phone numbers
         - parent(s) email addresses
         - starting date (date childcare required)"""
+    pass
+
+
+# Parent Model (Many-to-Many Relationship with Child)
+class Parent(TimeStampedModel):
+    """
+    model defines the following attributes:
+        - name
+        - phone number
+        - email address
+        - child(s) names
+    """
     pass
 
 
