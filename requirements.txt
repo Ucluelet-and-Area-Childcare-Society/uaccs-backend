@@ -5,3 +5,4 @@ sqlparse==0.5.5
 dotenv==0.9.9
 python-dotenv==1.2.2
 djangorestframework==3.17.1
+django-phonenumber-field[phonenumbers]==8.4.0
