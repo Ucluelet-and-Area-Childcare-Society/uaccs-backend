@@ -25,7 +25,7 @@ class Staff(TimeStampedModel):
         - photo (image field url tied to cloud storage)
         - role (i.e. position within the company) (choose from set of choices?)
     """
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=75)
     bio = models.TextField()
     email = models.EmailField(max_length=254)
     role = models.CharField(max_length=100) # may make enumeration for predefined choices
@@ -44,7 +44,7 @@ class Parent(TimeStampedModel):
         - email address
         - child(s) names
     """
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=75)
     phone_number = PhoneNumberField()
     email = models.EmailField(max_length=254)
     # children already specified Child class, no need to redefine
@@ -64,7 +64,7 @@ class Child(TimeStampedModel):
         - parent(s) email addresses
         - starting date (date childcare required)
     """
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=75)
     dob = models.DateField()
     starting_date = models.DateField()
     parents = models.ManyToManyField(Parent, related_name='children')
