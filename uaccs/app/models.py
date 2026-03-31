@@ -29,7 +29,7 @@ class Staff(TimeStampedModel):
     bio = models.TextField()
     email = models.EmailField(max_length=254)
     role = models.CharField(max_length=100) # may make enumeration for predefined choices
-    photo = models.ImageField() # missing upload_to parameter (set up object storage)
+    photo = models.ImageField(upload_to='staff/') # (set up object storage)
 
     def __str__(self):
         return self.name
