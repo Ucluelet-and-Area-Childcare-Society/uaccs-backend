@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Staff, Child, Parent
+from .models import Staff, Child, Parent, Resource
 
 
 # Tests for staff model
