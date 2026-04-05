@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Staff, Child, Parent, Resource
+from ..models import Staff, Child, Parent, Resource
 from django.core.files.uploadedfile import SimpleUploadedFile
 import datetime
 
