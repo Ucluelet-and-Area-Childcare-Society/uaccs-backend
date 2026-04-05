@@ -1,5 +1,6 @@
 from django.test import TestCase
 from .models import Staff, Child, Parent, Resource
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 # FOR TESTING OF STAFF BIO
 BIO = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " \
