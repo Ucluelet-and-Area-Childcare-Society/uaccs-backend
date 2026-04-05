@@ -35,3 +35,12 @@ class ParentTestCase(TestCase):
 # Tests for resource model
 class ResourceTestCase(TestCase):
     pass
+
+
+
+
+
+
+
+
+## ------ HELPER FUNCTIONS FOR TEST CASES BELOW -------
