@@ -2,9 +2,21 @@ from django.test import TestCase
 from .models import Staff, Child, Parent, Resource
 
 
+BIO = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " \
+    "Maecenas turpis libero, ornare in augue vulputate, auctor accumsan nunc. " \
+    "Phasellus vulputate scelerisque nisi in imperdiet. " \
+    "Nam cursus nisl nec justo bibendum, in facilisis odio mattis. " \
+    "Pellentesque hendrerit a neque vitae aliquam."
+
+
 # Tests for staff model
 class StaffTestCase(TestCase):
-    pass
+    def setUp(self):
+        Staff.objects.create(name="Jack Sparrow", 
+                             email="test@gmail.com", 
+                             role="Director",
+                             bio=BIO,
+                             photo = )
 
 # Tests for child model
 class ChildTestCase(TestCase):
