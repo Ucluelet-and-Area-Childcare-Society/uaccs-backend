@@ -1,6 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import AbstractUser
 
 
 # TimeStampedModel (base class)
@@ -100,7 +101,9 @@ class Resource(TimeStampedModel):
         if self.url == None and self.image == None and self.file == None:
             raise ValidationError("atleast one resource type must be chosen. ")
 
-
+# User model for future user authentication needs
+class User(AbstractUser):
+    pass        # add when necessary
     
 
 
