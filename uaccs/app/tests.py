@@ -1,7 +1,7 @@
 from django.test import TestCase
 from .models import Staff, Child, Parent, Resource
 
-
+# FOR TESTING OF STAFF BIO
 BIO = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " \
     "Maecenas turpis libero, ornare in augue vulputate, auctor accumsan nunc. " \
     "Phasellus vulputate scelerisque nisi in imperdiet. " \
