@@ -1,5 +1,6 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from django.core.exceptions import ValidationError
 
 
 # TimeStampedModel (base class)
@@ -78,8 +79,29 @@ class Resource(TimeStampedModel):
     """
     model to store generic website resources that dont fall into above models.
     Anything like photos, files, URLS, other static web resources on the site.
+    All file types are optional, but atleast one must be present in object instantiation.
     """
-    pass
+    RESOURCE_TYPES = [
+        ("url", "URL"),
+        ("image", "Image"),
+        ("file", "File"),
+    ]
+    description = models.CharField(max_length=100)
+    url = models.URLField(blank=True, null=True)  
+    image = models.ImageField(upload_to='resources/images/', null =True, blank =True)
+    file = models.FileField(upload_to='resources/files/', null=True, blank=True)
+    resource_type = models.CharField(max_length=10, choices=RESOURCE_TYPES, default="file")
+
+    def __str__(self):
+        return self.description
+    
+    # method to ensure atleast one file type is present.
+    def clean(self):
+        if self.url == None and self.image == None and self.file == None:
+            raise ValidationError("atleast one resource type must be chosen. ")
+
+
+    
 
 
 
