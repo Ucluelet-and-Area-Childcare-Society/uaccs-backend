@@ -20,6 +20,17 @@ class StaffTestCase(TestCase):
                              bio=BIO,
                              photo = TEST_IMG)
         
+    def testNormal(self):
+        """"Test normal values for staff object creation"""
+        staff = Staff.objects.get(name="Jack Sparrow")
+        self.assertEqual(staff.name, "Jack Sparrow")
+        self.assertEqual(staff.email, "test@gmail.com")
+        self.assertEqual(staff.role, "Director")
+        self.assertEqual(staff.bio, BIO)
+        self.assertEqual(staff.photo, TEST_IMG)
+        
+        
+        
 
 
 
