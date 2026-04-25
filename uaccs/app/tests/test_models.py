@@ -37,7 +37,11 @@ class StaffTestCase(TestCase):
             staff.full_clean()  # should throw a ValidationError
 
     def test_invalid_email(self):
-        pass
+        invalid_email = "invalid_email"
+        staff = Staff(name = "name", email = invalid_email, role = "Caretaker", bio = BIO)
+        
+        with self.assertRaises(ValidationError):
+            staff.full_clean()
 
     def test_image(self):
         pass
