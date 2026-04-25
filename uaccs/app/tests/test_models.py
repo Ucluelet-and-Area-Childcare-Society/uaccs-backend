@@ -3,7 +3,8 @@ from ..models import Staff, Child, Parent, Resource
 from django.core.files.uploadedfile import SimpleUploadedFile
 import datetime
 import tempfile
-
+from PIL import Image
+from io import BytesIO
 
 MEDIA_ROOT = tempfile.mkdtemp() # make temporary directory to store images for tests.
 
@@ -15,7 +16,7 @@ class StaffTestCase(TestCase):
                              email="test@gmail.com", 
                              role="Director",
                              bio=BIO,
-                             photo = )
+                             photo = generate_img)
         
     def test_normal(self):
         """"Test normal values for staff object creation"""
@@ -52,7 +53,6 @@ class ResourceTestCase(TestCase):
 ## ------ HELPER FUNCTIONS FOR TEST CASES BELOW -------
 
 
-
 """
 For Testing of Staff Bios.
 """
@@ -66,6 +66,15 @@ BIO = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " \
 Creates a test image to test the photo fields of above models
 using a SimpleUploadedFile to mock a real image.
 """
-def generate_img():
-    pass
+def generate_img(name, size, color):
+    file_obj = BytesIO()
+    img = Image.new(mode = "RGB", size = size, color = color)
+    img.save(file_obj, "JPEG")
+    file_obj.seek(0)
+
+    return SimpleUploadedFile(
+        name = name,
+        content = file_obj.read(),
+        content_type= "img/jpeg"
+    )
 
