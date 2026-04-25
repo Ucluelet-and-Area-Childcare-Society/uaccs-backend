@@ -18,7 +18,7 @@ class StaffTestCase(TestCase):
                              email="test@gmail.com", 
                              role="Director",
                              bio=BIO,
-                             photo = ...)
+                             photo = TEST_IMG)
         
 
 
@@ -39,8 +39,18 @@ class ResourceTestCase(TestCase):
 
 
 
-
-
-
-
 ## ------ HELPER FUNCTIONS FOR TEST CASES BELOW -------
+
+"""
+Below is bytes literal of a single black pixel, to be used to test ImageFields in above classes.
+"""
+
+img = (
+    b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04'
+    b'\x01\x0a\x00\x01\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02'
+    b'\x02\x4c\x01\x00\x3b'
+)
+
+TEST_IMG = SimpleUploadedFile(name='test_img.jpg',
+                              content= img,
+                              content_type='image/jpeg')
