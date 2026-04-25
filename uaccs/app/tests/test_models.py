@@ -20,13 +20,30 @@ class StaffTestCase(TestCase):
                              photo = generate_img(name="staff_test.jpeg", size=(100, 100), color="green"))
     
         
-    def test_normal(self):
+    def test_normal_except_img(self):
         """"Test normal values for staff object creation"""
         staff = Staff.objects.get(name="Jack Sparrow")
         self.assertEqual(staff.name, "Jack Sparrow")
         self.assertEqual(staff.email, "test@gmail.com")
         self.assertEqual(staff.role, "Director")
         self.assertEqual(staff.bio, BIO)
+    
+    def test_name_max_length(self):
+        pass
+
+    def test_invalid_email(self):
+        pass
+
+    def test_image(self):
+        pass
+
+    def test__str__(self):
+        pass
+    
+
+
+
+    
        
 
     
