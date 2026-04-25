@@ -27,6 +27,7 @@ class StaffTestCase(TestCase):
         self.assertEqual(staff.email, "test@gmail.com")
         self.assertEqual(staff.role, "Director")
         self.assertEqual(staff.bio, BIO)
+        self.assertEqual(str(staff), staff.name)
     
     def test_name_max_length(self):
         invalid_name = "x" * 76
@@ -46,8 +47,6 @@ class StaffTestCase(TestCase):
     def test_image(self):
         pass
 
-    def test__str__(self):
-        pass
 
 
 
