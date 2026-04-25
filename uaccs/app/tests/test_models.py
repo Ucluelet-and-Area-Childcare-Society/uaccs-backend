@@ -1,11 +1,11 @@
 from django.test import TestCase, override_settings
 from ..models import Staff, Child, Parent, Resource
 from django.core.files.uploadedfile import SimpleUploadedFile
-import datetime
-import tempfile
+import datetime, shutil, tempfile
 from PIL import Image
 from io import BytesIO
-import shutil
+from django.core.exceptions import ValidationError
+
 
 MEDIA_ROOT = tempfile.mkdtemp() # make temporary directory to store images for tests.
 
@@ -29,7 +29,12 @@ class StaffTestCase(TestCase):
         self.assertEqual(staff.bio, BIO)
     
     def test_name_max_length(self):
-        pass
+        invalid_name = "x" * 76
+        # instantiate object without saving to DB
+        staff = Staff(name = invalid_name, email = "test@gmail.com", role = "Assistant", bio = "BIOOOO")
+        
+        with self.assertRaises(ValidationError):
+            staff.full_clean()  # should throw a ValidationError
 
     def test_invalid_email(self):
         pass
@@ -39,7 +44,7 @@ class StaffTestCase(TestCase):
 
     def test__str__(self):
         pass
-    
+
 
 
 
