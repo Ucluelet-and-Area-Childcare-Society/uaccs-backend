@@ -1,17 +1,13 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from ..models import Staff, Child, Parent, Resource
 from django.core.files.uploadedfile import SimpleUploadedFile
 import datetime
+import tempfile
 
-# FOR TESTING OF STAFF BIO
-BIO = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " \
-    "Maecenas turpis libero, ornare in augue vulputate, auctor accumsan nunc. " \
-    "Phasellus vulputate scelerisque nisi in imperdiet. " \
-    "Nam cursus nisl nec justo bibendum, in facilisis odio mattis. " \
-    "Pellentesque hendrerit a neque vitae aliquam."
-
+MEDIA_ROOT = tempfile.mkdtemp() # make temporary directory to store images for tests.
 
 # Tests for staff model (all fields are required)
+@override_settings(MEDIA_ROOT = MEDIA_ROOT)
 class StaffTestCase(TestCase):
     def setUp(self):
         Staff.objects.create(name="Jack Sparrow", 
@@ -20,7 +16,7 @@ class StaffTestCase(TestCase):
                              bio=BIO,
                              photo = TEST_IMG)
         
-    def testNormal(self):
+    def test_normal(self):
         """"Test normal values for staff object creation"""
         staff = Staff.objects.get(name="Jack Sparrow")
         self.assertEqual(staff.name, "Jack Sparrow")
@@ -28,7 +24,9 @@ class StaffTestCase(TestCase):
         self.assertEqual(staff.role, "Director")
         self.assertEqual(staff.bio, BIO)
         self.assertEqual(staff.photo, TEST_IMG)
-        
+
+    
+
         
         
 
@@ -55,13 +53,22 @@ class ResourceTestCase(TestCase):
 """
 Below is bytes literal of a single black pixel, to be used to test ImageFields in above classes.
 """
-
 img = (
     b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04'
     b'\x01\x0a\x00\x01\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02'
     b'\x02\x4c\x01\x00\x3b'
 )
 
-TEST_IMG = SimpleUploadedFile(name='test_img.jpg',
+"""
+For Testing of Staff Bios.
+"""
+BIO = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " \
+    "Maecenas turpis libero, ornare in augue vulputate, auctor accumsan nunc. " \
+    "Phasellus vulputate scelerisque nisi in imperdiet. " \
+    "Nam cursus nisl nec justo bibendum, in facilisis odio mattis. " \
+    "Pellentesque hendrerit a neque vitae aliquam."
+
+
+TEST_IMG = SimpleUploadedFile(name='test_img.gif',
                               content= img,
-                              content_type='image/jpeg')
+                              content_type='image/gif')
