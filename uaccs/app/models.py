@@ -100,6 +100,7 @@ class Resource(TimeStampedModel):
     def clean(self):
         if self.url == None and self.image == None and self.file == None:
             raise ValidationError("atleast one resource type must be chosen. ")
+        
 
 # User model for future user authentication needs
 class User(AbstractUser):
