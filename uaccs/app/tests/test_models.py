@@ -16,7 +16,7 @@ class StaffTestCase(TestCase):
                              email="test@gmail.com", 
                              role="Director",
                              bio=BIO,
-                             photo = generate_img)
+                             photo = generate_img(name="staff_test.jpeg", size=(100, 100), color="green"))
         
     def test_normal(self):
         """"Test normal values for staff object creation"""
