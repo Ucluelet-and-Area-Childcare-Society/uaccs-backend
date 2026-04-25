@@ -29,7 +29,7 @@ class Staff(TimeStampedModel):
     """
     name = models.CharField(max_length=75)
     bio = models.TextField()
-    email = models.EmailField(max_length=254)
+    email = models.EmailField(max_length=254) # might change to be optional later
     role = models.CharField(max_length=100) # may make enumeration for predefined choices
     photo = models.ImageField(upload_to='staff/') # (set up object storage)
 
