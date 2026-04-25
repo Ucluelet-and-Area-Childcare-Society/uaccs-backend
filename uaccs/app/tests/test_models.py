@@ -5,6 +5,7 @@ import datetime
 import tempfile
 from PIL import Image
 from io import BytesIO
+import shutil
 
 MEDIA_ROOT = tempfile.mkdtemp() # make temporary directory to store images for tests.
 
@@ -17,6 +18,7 @@ class StaffTestCase(TestCase):
                              role="Director",
                              bio=BIO,
                              photo = generate_img(name="staff_test.jpeg", size=(100, 100), color="green"))
+    
         
     def test_normal(self):
         """"Test normal values for staff object creation"""
@@ -25,7 +27,7 @@ class StaffTestCase(TestCase):
         self.assertEqual(staff.email, "test@gmail.com")
         self.assertEqual(staff.role, "Director")
         self.assertEqual(staff.bio, BIO)
-        #self.assertEqual(staff.photo, TEST_IMG)
+       
 
     
 
@@ -75,6 +77,9 @@ def generate_img(name, size, color):
     return SimpleUploadedFile(
         name = name,
         content = file_obj.read(),
-        content_type= "img/jpeg"
+        content_type= "image/jpeg"
     )
 
+## Delete generated temporary directory after all tests have run
+def tearDownModule():
+    shutil.rmtree(MEDIA_ROOT)
