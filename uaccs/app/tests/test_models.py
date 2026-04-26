@@ -13,7 +13,7 @@ MEDIA_ROOT = tempfile.mkdtemp() # make temporary directory to store images for t
 @override_settings(MEDIA_ROOT = MEDIA_ROOT)
 class StaffTestCase(TestCase):
     def setUp(self):
-        Staff.objects.create(name="Jack Sparrow", 
+        self.staff = Staff.objects.create(name="Jack Sparrow", 
                              email="test@gmail.com", 
                              role="Director",
                              bio=BIO,
@@ -27,6 +27,7 @@ class StaffTestCase(TestCase):
         self.assertEqual(staff.email, "test@gmail.com")
         self.assertEqual(staff.role, "Director")
         self.assertEqual(staff.bio, BIO)
+        self.assertTrue(staff.photo)
         self.assertEqual(str(staff), staff.name)
     
     def test_name_max_length(self):
@@ -45,21 +46,13 @@ class StaffTestCase(TestCase):
             staff.full_clean()
 
     def test_image(self):
-        pass
-
-
-
-
-
-    
+       staff = self.staff
+       self.assertTrue(staff.photo.url.endswith("staff_test.jpeg"))
+       self.assertEqual(staff.photo.width, 100)
+       self.assertEqual(staff.photo.height, 100)
        
-
-    
-
-        
-        
-
-
+       with Image.open(staff.photo.path) as img:
+           self.assertEqual(img.format, "JPEG")
 
 
 # Tests for child model
