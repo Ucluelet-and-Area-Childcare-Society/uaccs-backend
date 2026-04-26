@@ -97,10 +97,10 @@ class ChildTestCase(TestCase):
         self.assertIn(self.parent2, self.child.parents.all())
         
         # check reverse relation
-        self.assertIn(self.child, self.parent1.children.all())  
-        self.assertIn(self.child, self.parent2.children.all())  
-        self.assertEqual(self.parent1.children.count(), 1)
-        self.assertEqual(self.parent2.children.count(), 1)
+        self.assertIn(self.child, self.parent1.children.all())   # type: ignore
+        self.assertIn(self.child, self.parent2.children.all())   # type: ignore
+        self.assertEqual(self.parent1.children.count(), 1)       # type: ignore
+        self.assertEqual(self.parent2.children.count(), 1)       # type: ignore
     
     # Already tested invalid email, required fields, no need to repeat.
 
