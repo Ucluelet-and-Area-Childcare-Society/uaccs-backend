@@ -54,6 +54,9 @@ class StaffTestCase(TestCase):
        with Image.open(staff.photo.path) as img:
            self.assertEqual(img.format, "JPEG")
 
+    def test_invalid_image(self):
+        pass
+
 
 # Tests for child model
 class ChildTestCase(TestCase):
