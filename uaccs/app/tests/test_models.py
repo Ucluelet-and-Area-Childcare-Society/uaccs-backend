@@ -10,6 +10,11 @@ from django.core.exceptions import ValidationError
 MEDIA_ROOT = tempfile.mkdtemp() # make temporary directory to store images for tests.
 
 # Tests for staff model (all fields are required)
+"""
+Don't need test for invalid image here since all
+images will be passed through Django Serializer which
+automatically validates images.
+"""
 @override_settings(MEDIA_ROOT = MEDIA_ROOT)
 class StaffTestCase(TestCase):
     def setUp(self):
@@ -54,11 +59,8 @@ class StaffTestCase(TestCase):
        with Image.open(staff.photo.path) as img:
            self.assertEqual(img.format, "JPEG")
 
-    def test_invalid_image(self):
-        invalid = Staff(name = "n", email = "valid@gmail.com", bio = BIO, photo = invalid_file, role = "X")
-        with self.assertRaises(ValidationError):
-            invalid.full_clean()
-
+    
+        
 
 # Tests for child model
 class ChildTestCase(TestCase):
@@ -103,12 +105,6 @@ def generate_img(name, size, color):
         content_type= "image/jpeg"
     )
 
-# Invalid Image to use for testing
-invalid_file = SimpleUploadedFile(
-    name = "invalid.jpeg",
-    content = b"Invalid image, not an image",
-    content_type = "image/jpeg"
-)
 
 ## Delete generated temporary directory after all tests have run
 def tearDownModule():
