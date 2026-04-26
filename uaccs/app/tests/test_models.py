@@ -59,16 +59,21 @@ class StaffTestCase(TestCase):
        with Image.open(staff.photo.path) as img:
            self.assertEqual(img.format, "JPEG")
 
+    def test_required_fields(self):
+        staff = Staff()
+        
+        with self.assertRaises(ValidationError):
+            staff.full_clean()
+
     
 
 # Tests for child model
 class ChildTestCase(TestCase):
     def setUp(self):
-        # Note: this works because .create() doesnt validate
-        # Many-Many on creation.
+        # Note: this works because .create() doesnt validate Many-Many on creation.
         self.parent = Parent.objects.create(
-            name = "Parent"
-            phone_number = PhoneNumber.from_string("+12345678900")
+            name = "Parent",
+            phone_number = PhoneNumber.from_string("+12345678900"),
             email = "parent@hotmail.com"
         )
 
@@ -76,8 +81,28 @@ class ChildTestCase(TestCase):
             name = "child",
             dob = date(2024, 1, 1),
             starting_date = date(2026, 4, 20)
-            parents = 
-        )      
+        ) 
+
+    def test_relation(self):
+        self.child.parents.add(self.parent)
+        self.assertEqual(self.child.parents.count(), 1)
+        self.assertIn(self.parent, self.child.parents.all())
+        
+        # check reverse relation
+        self.assertIn(self.child, self.parent.children.all())    
+        self.assertEqual(self.parent.children.count(), 1)
+    
+    # Already tested invalid email, no need to repeat.
+
+    def test_date(self):
+        self.assertEqual(self.child.dob, date(2024, 1, 1))
+        self.assertEqual(self.child.starting_date, date(2026, 4, 20))
+
+        child2 = Child(name = "c2", dob = "Not a date", starting_date = date(2025, 1, 1))
+        with self.assertRaises(ValidationError):
+            child2.full_clean()
+
+
 
 # Tests for parent model
 class ParentTestCase(TestCase):
