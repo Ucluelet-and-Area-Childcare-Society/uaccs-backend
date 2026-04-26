@@ -142,9 +142,13 @@ class ParentTestCase(TestCase):
 
 
 # Tests for resource model
+@override_settings(MEDIA_ROOT = MEDIA_ROOT)
 class ResourceTestCase(TestCase):
     def setUp(self):
         self.empty = Resource.objects.create()  # this should fail.
+
+        self.resource_good = Resource.objects.create(url = "https://testurl.com")
+        self.resource_bad = Resource.objects.create(image = generate_img(name = "test.jpeg", size = (50, 50), color = "blue") file = )
     
     # no need to retest image
 
@@ -188,6 +192,13 @@ def generate_img(name, size, color):
         content = file_obj.read(),
         content_type= "image/jpeg"
     )
+
+# Creates a 'fake' file to use in testing
+file = SimpleUploadedFile(
+    name = "file.pdf",
+    content = b"some content here...",
+    content_type= "application/pdf"
+)
 
 
 ## Delete generated temporary directory after all tests have run
