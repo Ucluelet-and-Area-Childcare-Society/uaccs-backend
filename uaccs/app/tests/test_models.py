@@ -1,10 +1,11 @@
 from django.test import TestCase, override_settings
 from ..models import Staff, Child, Parent, Resource
 from django.core.files.uploadedfile import SimpleUploadedFile
-import datetime, shutil, tempfile
+import shutil, tempfile
 from PIL import Image
 from io import BytesIO
 from django.core.exceptions import ValidationError
+from datetime import date
 
 
 MEDIA_ROOT = tempfile.mkdtemp() # make temporary directory to store images for tests.
@@ -60,11 +61,14 @@ class StaffTestCase(TestCase):
            self.assertEqual(img.format, "JPEG")
 
     
-        
 
 # Tests for child model
 class ChildTestCase(TestCase):
-    pass      
+    def setUp(self):
+        self.child = Child.objects.create(
+            name = "child",
+            dob = 
+        )      
 
 # Tests for parent model
 class ParentTestCase(TestCase):
