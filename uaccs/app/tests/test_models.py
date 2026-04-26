@@ -60,8 +60,8 @@ class StaffTestCase(TestCase):
            self.assertEqual(img.format, "JPEG")
 
     def test_required_fields(self):
-        staff = Staff()
-        
+        staff = Staff(name = "", email = "test@gmail.com", role = "Assistant", bio = "BIOOOO")
+
         with self.assertRaises(ValidationError):
             staff.full_clean()
 
@@ -92,7 +92,7 @@ class ChildTestCase(TestCase):
         self.assertIn(self.child, self.parent.children.all())    
         self.assertEqual(self.parent.children.count(), 1)
     
-    # Already tested invalid email, no need to repeat.
+    # Already tested invalid email, required fields, no need to repeat.
 
     def test_date(self):
         self.assertEqual(self.child.dob, date(2024, 1, 1))
@@ -101,6 +101,9 @@ class ChildTestCase(TestCase):
         child2 = Child(name = "c2", dob = "Not a date", starting_date = date(2025, 1, 1))
         with self.assertRaises(ValidationError):
             child2.full_clean()
+
+    def test_dob_before_starting_date(self):
+        pass
 
 
 
