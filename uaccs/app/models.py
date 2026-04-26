@@ -123,6 +123,10 @@ class Resource(TimeStampedModel):
         elif self.resource_type == "file" and not self.file:
             raise ValidationError("Selected File but did not provide one", code = "resource_mismatch")
         
+        # extra check, for redundancy, default type is 'file'
+        if not self.resource_type:
+            raise ValidationError("Must select a resource type", code = "null_resource_type")
+        
 
 # User model for future user authentication needs
 class User(AbstractUser):
