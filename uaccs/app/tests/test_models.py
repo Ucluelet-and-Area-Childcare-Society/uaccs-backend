@@ -121,7 +121,26 @@ class ChildTestCase(TestCase):
 
 # Tests for parent model
 class ParentTestCase(TestCase):
-    pass
+    def setUp(self):
+        self.parent = Parent.objects.create(
+            name = "Parent",
+            phone_number = PhoneNumber.from_string("+12345678900"),
+            email = "parent_email@gmail.com"
+        )
+    # no need to retest name, email.
+
+    def test_phone_number(self):
+        self.assertEqual(self.parent.phone_number, PhoneNumber.from_string("+12345678900"))
+        invalid_number = Parent(name = "name", email = "valid@gmail.com", phone_number = "Not A Number")
+
+        with self.assertRaises(ValidationError):
+            invalid_number.full_clean()
+    
+    def test__str__(self):
+        self.assertEqual(str(self.parent), self.parent.name)
+
+    
+
 
 
 
