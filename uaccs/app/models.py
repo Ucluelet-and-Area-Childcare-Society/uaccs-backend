@@ -108,8 +108,13 @@ class Resource(TimeStampedModel):
     def clean(self):
         super().clean()
 
-        if not any([self.url, self.image, self.file]):
+        fields = [self.url, self.image, self.file]
+        filled_count = sum(bool(x) for x in fields)
+
+        if filled_count == 0:
             raise ValidationError("atleast one resource type must be chosen. ")
+        elif filled_count > 1:
+            raise ValidationError("Only one resource type can be set at a time", code = "extra_resource")
         
         if self.resource_type == "url" and not self.url:
             raise ValidationError("Selected URL but did not provide one", code = "resource_mismatch")
