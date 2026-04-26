@@ -73,7 +73,13 @@ class Child(TimeStampedModel):
 
     def __str__(self):
         return self.name
+    
+    def clean(self):
+        super().clean()
 
+        # check if dob is BEFORE starting date
+        if self.dob > self.starting_date:
+            raise ValidationError("Starting date cannot be after DOB", code="invalid_start_date")
 
 # Resource Model (for generic site resources, i.e. photos, urls etc)
 class Resource(TimeStampedModel):
