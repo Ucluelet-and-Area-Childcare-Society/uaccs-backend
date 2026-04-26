@@ -12,7 +12,7 @@ MEDIA_ROOT = tempfile.mkdtemp() # make temporary directory to store images for t
 # Tests for staff model (all fields are required)
 """
 Don't need test for invalid image here since all
-images will be passed through Django Serializer which
+images will be passed through Django Serializer / Forms which
 automatically validates images.
 """
 @override_settings(MEDIA_ROOT = MEDIA_ROOT)
