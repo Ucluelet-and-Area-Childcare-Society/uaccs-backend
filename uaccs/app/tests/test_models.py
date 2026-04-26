@@ -101,6 +101,15 @@ def generate_img(name, size, color):
         content_type= "image/jpeg"
     )
 
+# Invalid Image to use for testing
+invalid_file = SimpleUploadedFile(
+    name = "invalid.jpeg",
+    content = b"Invalid image, not an image",
+    content_type = "image/jpeg"
+)
+
 ## Delete generated temporary directory after all tests have run
 def tearDownModule():
     shutil.rmtree(MEDIA_ROOT)
+
+
