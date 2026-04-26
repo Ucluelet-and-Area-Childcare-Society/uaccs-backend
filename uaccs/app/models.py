@@ -109,6 +109,13 @@ class Resource(TimeStampedModel):
         if not any([self.url, self.image, self.file]):
             raise ValidationError("atleast one resource type must be chosen. ")
         
+        if self.resource_type == "url" and not self.url:
+            raise ValidationError("Selected URL but did not provide one", code = "resource_mismatch")
+        elif self.resource_type == "image" and not self.image:
+            raise ValidationError("Selected Image but did not provide one", code = "resource_mismatch")
+        elif self.resource_type == "file" and not self.file:
+            raise ValidationError("Selected File but did not provide one", code = "resource_mismatch")
+        
 
 # User model for future user authentication needs
 class User(AbstractUser):
