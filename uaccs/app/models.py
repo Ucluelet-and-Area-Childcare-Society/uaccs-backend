@@ -104,7 +104,9 @@ class Resource(TimeStampedModel):
     
     # method to ensure atleast one file type is present.
     def clean(self):
-        if self.url == None and self.image == None and self.file == None:
+        super().clean()
+
+        if not any([self.url, self.image, self.file]):
             raise ValidationError("atleast one resource type must be chosen. ")
         
 
