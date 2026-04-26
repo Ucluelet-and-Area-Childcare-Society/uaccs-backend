@@ -157,6 +157,9 @@ class ResourceTestCase(TestCase):
     def test_resource_mismatch(self):
         pass
 
+    def test_empty(self):
+        pass
+
 
 
 
