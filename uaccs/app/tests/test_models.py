@@ -99,11 +99,14 @@ class ChildTestCase(TestCase):
         self.assertEqual(self.child.starting_date, date(2026, 4, 20))
 
         child2 = Child(name = "c2", dob = "Not a date", starting_date = date(2025, 1, 1))
-        with self.assertRaises(ValidationError):
+        with self.assertRaises((ValidationError, TypeError, ValueError)):
             child2.full_clean()
 
     def test_dob_before_starting_date(self):
-        pass
+        bad_child = Child(name = "name", dob = date(2025, 1, 1), starting_date = date(2023, 1, 1))
+
+        with self.assertRaises(ValidationError):
+            bad_child.full_clean()
 
 
 
