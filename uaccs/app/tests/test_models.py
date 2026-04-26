@@ -6,7 +6,7 @@ from PIL import Image
 from io import BytesIO
 from django.core.exceptions import ValidationError
 from datetime import date
-
+from phonenumber_field.phonenumber import PhoneNumber
 
 MEDIA_ROOT = tempfile.mkdtemp() # make temporary directory to store images for tests.
 
@@ -25,7 +25,6 @@ class StaffTestCase(TestCase):
                              bio=BIO,
                              photo = generate_img(name="staff_test.jpeg", size=(100, 100), color="green"))
     
-        
     def test_normal_except_img(self):
         """"Test normal values for staff object creation"""
         staff = Staff.objects.get(name="Jack Sparrow")
@@ -65,9 +64,19 @@ class StaffTestCase(TestCase):
 # Tests for child model
 class ChildTestCase(TestCase):
     def setUp(self):
+        # Note: this works because .create() doesnt validate
+        # Many-Many on creation.
+        self.parent = Parent.objects.create(
+            name = "Parent"
+            phone_number = PhoneNumber.from_string("+12345678900")
+            email = "parent@hotmail.com"
+        )
+
         self.child = Child.objects.create(
             name = "child",
-            dob = 
+            dob = date(2024, 1, 1),
+            starting_date = date(2026, 4, 20)
+            parents = 
         )      
 
 # Tests for parent model
