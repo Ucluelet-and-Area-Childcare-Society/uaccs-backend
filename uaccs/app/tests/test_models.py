@@ -55,7 +55,9 @@ class StaffTestCase(TestCase):
            self.assertEqual(img.format, "JPEG")
 
     def test_invalid_image(self):
-        pass
+        invalid = Staff(name = "n", email = "valid@gmail.com", bio = BIO, photo = invalid_file, role = "X")
+        with self.assertRaises(ValidationError):
+            invalid.full_clean()
 
 
 # Tests for child model
