@@ -139,22 +139,23 @@ class ParentTestCase(TestCase):
     def test__str__(self):
         self.assertEqual(str(self.parent), self.parent.name)
 
-    
-
-
-
-
-
-
-
-
-
-
 
 
 # Tests for resource model
 class ResourceTestCase(TestCase):
-    pass
+    def setUp(self):
+        self.empty = Resource.objects.create()  # this should fail.
+    
+    # no need to retest image
+
+    def test_url(self):
+        pass
+
+    def test_file(self):
+        pass
+
+    def test_resource_mismatch(self):
+        pass
 
 
 
