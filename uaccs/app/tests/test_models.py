@@ -119,11 +119,19 @@ class ChildTestCase(TestCase):
             bad_child.full_clean()
 
 
-
-
 # Tests for parent model
 class ParentTestCase(TestCase):
     pass
+
+
+
+
+
+
+
+
+
+
 
 # Tests for resource model
 class ResourceTestCase(TestCase):
@@ -135,19 +143,17 @@ class ResourceTestCase(TestCase):
 ## ------ HELPER FUNCTIONS FOR TEST CASES BELOW -------
 
 
-"""
-For Testing of Staff Bios.
-"""
+
+# For testing of staff bios:
 BIO = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " \
     "Maecenas turpis libero, ornare in augue vulputate, auctor accumsan nunc. " \
     "Phasellus vulputate scelerisque nisi in imperdiet. " \
     "Nam cursus nisl nec justo bibendum, in facilisis odio mattis. " \
     "Pellentesque hendrerit a neque vitae aliquam."
 
-"""
-Creates a test image to test the photo fields of above models
-using a SimpleUploadedFile to mock a real image.
-"""
+
+# Creates a test image to test the photo fields of above models
+# using a SimpleUploadedFile to mock a real image.
 def generate_img(name, size, color):
     file_obj = BytesIO()
     img = Image.new(mode = "RGB", size = size, color = color)
