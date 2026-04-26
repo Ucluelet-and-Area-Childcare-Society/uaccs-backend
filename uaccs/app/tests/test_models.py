@@ -71,10 +71,16 @@ class StaffTestCase(TestCase):
 class ChildTestCase(TestCase):
     def setUp(self):
         # Note: this works because .create() doesnt validate Many-Many on creation.
-        self.parent = Parent.objects.create(
-            name = "Parent",
+        self.parent1 = Parent.objects.create(
+            name = "Parent1",
             phone_number = PhoneNumber.from_string("+12345678900"),
             email = "parent@hotmail.com"
+        )
+
+        self.parent2 = Parent.objects.create(
+            name = "Parent2",
+            phone_number = PhoneNumber.from_string("+98765432100"),
+            email = "parent@gmail.com"
         )
 
         self.child = Child.objects.create(
@@ -84,13 +90,17 @@ class ChildTestCase(TestCase):
         ) 
 
     def test_relation(self):
-        self.child.parents.add(self.parent)
-        self.assertEqual(self.child.parents.count(), 1)
-        self.assertIn(self.parent, self.child.parents.all())
+        self.child.parents.add(self.parent1)
+        self.child.parents.add(self.parent2)
+        self.assertEqual(self.child.parents.count(), 2)
+        self.assertIn(self.parent1, self.child.parents.all())
+        self.assertIn(self.parent2, self.child.parents.all())
         
         # check reverse relation
-        self.assertIn(self.child, self.parent.children.all())    
-        self.assertEqual(self.parent.children.count(), 1)
+        self.assertIn(self.child, self.parent1.children.all())  
+        self.assertIn(self.child, self.parent2.children.all())  
+        self.assertEqual(self.parent1.children.count(), 1)
+        self.assertEqual(self.parent2.children.count(), 1)
     
     # Already tested invalid email, required fields, no need to repeat.
 
@@ -107,6 +117,7 @@ class ChildTestCase(TestCase):
 
         with self.assertRaises(ValidationError):
             bad_child.full_clean()
+
 
 
 
