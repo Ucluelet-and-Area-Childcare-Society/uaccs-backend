@@ -31,6 +31,7 @@ DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'app.User'
 
 # Application definition
 
@@ -43,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app',
     'rest_framework',
-    'phonenumber_field'
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [

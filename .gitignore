@@ -6,3 +6,6 @@ venv/
 # Byte-compiled / optimized files
 __pycache__/
 
+
+# Code coverage reports
+.coverage
