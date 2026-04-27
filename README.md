@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 > **Note:** If Python is incompatible, substitute `python3` for `python` throughout.
 
-### 4. Run Migrations
+### 2. Run Migrations
 
   Ensure you are at the folder ./uaccs-backend/uaccs for *Mac/Linux*, and .\uaccs-backend\uaccs for *Windows*.
 
