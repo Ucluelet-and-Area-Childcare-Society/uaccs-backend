@@ -137,5 +137,9 @@ class User(AbstractUser):
     pass        # add when necessary
     
 
+# Method to validate resource size to be < 10MB (for all resources)
+def validate_resource_size(resource):
+    limit = 10 * 1024 * 1024    # equivalent to 10MB
 
-
+    if resource.size > limit:
+        raise ValidationError("This file is too large, please compress it and try again.")
