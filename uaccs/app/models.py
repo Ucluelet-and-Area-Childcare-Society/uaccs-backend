@@ -116,8 +116,8 @@ class Resource(TimeStampedModel):
     ]
     description = models.CharField(max_length=100)
     url = models.URLField(blank=True, null=True)  
-    image = models.ImageField(upload_to='resources/images/', null =True, blank =True)
-    file = models.FileField(upload_to='resources/files/', null=True, blank=True)
+    image = models.ImageField(upload_to='resources/images/', null =True, blank =True, validators=[validate_resource_size])
+    file = models.FileField(upload_to='resources/files/', null=True, blank=True, validators=[validate_resource_size])
     resource_type = models.CharField(max_length=10, choices=RESOURCE_TYPES, default="file")
 
     def __str__(self):
