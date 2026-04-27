@@ -148,11 +148,11 @@ class ResourceTestCase(TestCase):
     def setUp(self):
         self.empty = Resource.objects.create()  # this should fail.
 
-        self.resource_good = Resource.objects.create(url = "https://testurl.com", resource_type = "URL")
+        self.resource_good = Resource.objects.create(url = "https://testurl.com", resource_type = "url")
 
         self.resource_bad = Resource.objects.create(image = generate_img(name = "test.jpeg", size = (50, 50), color = "blue"), 
                                                     file = FAKE_FILE, 
-                                                    resource_type = "Image")
+                                                    resource_type = "image")
     
     # no need to retest image
 
@@ -160,13 +160,13 @@ class ResourceTestCase(TestCase):
         self.assertEqual(self.resource_good.url, "https://testurl.com")
         self.assertFalse(self.resource_good.image)
         self.assertFalse(self.resource_good.file)
-        self.assertEqual(self.resource_good.resource_type, "URL")
+        self.assertEqual(self.resource_good.resource_type, "url")
 
     def test_file(self):
         file = Resource(file = FAKE_FILE)    # resource_type defaults to file
-        self.assertEqual(file.resource_type, "File")
-        self.assertFalse(self.resource_good.image)
-        self.assertFalse(self.resource_good.url)
+        self.assertEqual(file.resource_type, "file")
+        self.assertFalse(file.image)
+        self.assertFalse(file.url)
         
 
     def test_resource_mismatch(self):
