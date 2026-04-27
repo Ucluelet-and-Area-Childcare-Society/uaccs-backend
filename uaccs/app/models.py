@@ -4,6 +4,8 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractUser
 
 
+## -------- HELPER FUNCTIONS --------
+
 # Method to validate resource size to be < 10MB (for all resources)
 def validate_resource_size(resource):
     limit = 10 * 1024 * 1024    # equivalent to 10MB
@@ -11,6 +13,9 @@ def validate_resource_size(resource):
     if resource.size > limit:
         raise ValidationError("This file is too large, please compress it and try again.")
     
+
+
+## -------- ABSTRACT MODEL --------
 
 # TimeStampedModel (base class)
 class TimeStampedModel(models.Model):
@@ -24,6 +29,8 @@ class TimeStampedModel(models.Model):
     class Meta:
         abstract = True
 
+
+## -------- MODELS --------
 
 # Staff Model
 class Staff(TimeStampedModel):
