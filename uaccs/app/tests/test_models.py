@@ -9,6 +9,7 @@ from datetime import date
 from phonenumber_field.phonenumber import PhoneNumber
 
 MEDIA_ROOT = tempfile.mkdtemp() # make temporary directory to store images for tests.
+FAKE_FILE = SimpleUploadedFile(name = "file.pdf", content = b"some content here...", content_type= "application/pdf")
 
 # Tests for staff model (all fields are required)
 """
@@ -147,16 +148,22 @@ class ResourceTestCase(TestCase):
     def setUp(self):
         self.empty = Resource.objects.create()  # this should fail.
 
-        self.resource_good = Resource.objects.create(url = "https://testurl.com")
-        self.resource_bad = Resource.objects.create(image = generate_img(name = "test.jpeg", size = (50, 50), color = "blue") file = )
+        self.resource_good = Resource.objects.create(url = "https://testurl.com", resource_type = "URL")
+
+        self.resource_bad = Resource.objects.create(image = generate_img(name = "test.jpeg", size = (50, 50), color = "blue"), 
+                                                    file = file, 
+                                                    resource_type = "Image")
     
     # no need to retest image
 
     def test_url(self):
-        pass
+        self.assertEqual(self.resource_good.url, "https://testurl.com")
+        self.assertFalse(self.resource_good.image)
+        self.assertFalse(self.resource_good.file)
+        self.assertEqual(self.resource_good.resource_type, "URL")
 
     def test_file(self):
-        pass
+        file = Resource(file = file)    # resource_type defaults to file
 
     def test_resource_mismatch(self):
         pass
@@ -192,13 +199,6 @@ def generate_img(name, size, color):
         content = file_obj.read(),
         content_type= "image/jpeg"
     )
-
-# Creates a 'fake' file to use in testing
-file = SimpleUploadedFile(
-    name = "file.pdf",
-    content = b"some content here...",
-    content_type= "application/pdf"
-)
 
 
 ## Delete generated temporary directory after all tests have run
