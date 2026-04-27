@@ -147,7 +147,7 @@ class Resource(TimeStampedModel):
             raise ValidationError("Must select a resource type", code = "null_resource_type")
         
 
-# User model for future user authentication needs
+# User model for future user authentication needs (Dont comment out)
 class User(AbstractUser):
     pass        # add when necessary
     
