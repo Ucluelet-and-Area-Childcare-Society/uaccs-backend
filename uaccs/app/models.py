@@ -4,6 +4,14 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractUser
 
 
+# Method to validate resource size to be < 10MB (for all resources)
+def validate_resource_size(resource):
+    limit = 10 * 1024 * 1024    # equivalent to 10MB
+
+    if resource.size > limit:
+        raise ValidationError("This file is too large, please compress it and try again.")
+    
+
 # TimeStampedModel (base class)
 class TimeStampedModel(models.Model):
     """
@@ -31,7 +39,7 @@ class Staff(TimeStampedModel):
     bio = models.TextField()
     email = models.EmailField(max_length=254) # might change to be optional later
     role = models.CharField(max_length=100) # may make enumeration for predefined choices
-    photo = models.ImageField(upload_to='staff/') # (set up object storage)
+    photo = models.ImageField(upload_to='staff/', validators=[validate_resource_size]) # (set up object storage)
 
     def __str__(self):
         return self.name
@@ -136,10 +144,3 @@ class Resource(TimeStampedModel):
 class User(AbstractUser):
     pass        # add when necessary
     
-
-# Method to validate resource size to be < 10MB (for all resources)
-def validate_resource_size(resource):
-    limit = 10 * 1024 * 1024    # equivalent to 10MB
-
-    if resource.size > limit:
-        raise ValidationError("This file is too large, please compress it and try again.")
