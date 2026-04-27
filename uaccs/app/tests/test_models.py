@@ -151,7 +151,7 @@ class ResourceTestCase(TestCase):
         self.resource_good = Resource.objects.create(url = "https://testurl.com", resource_type = "URL")
 
         self.resource_bad = Resource.objects.create(image = generate_img(name = "test.jpeg", size = (50, 50), color = "blue"), 
-                                                    file = file, 
+                                                    file = FAKE_FILE, 
                                                     resource_type = "Image")
     
     # no need to retest image
@@ -163,7 +163,11 @@ class ResourceTestCase(TestCase):
         self.assertEqual(self.resource_good.resource_type, "URL")
 
     def test_file(self):
-        file = Resource(file = file)    # resource_type defaults to file
+        file = Resource(file = FAKE_FILE)    # resource_type defaults to file
+        self.assertEqual(file.resource_type, "File")
+        self.assertFalse(self.resource_good.image)
+        self.assertFalse(self.resource_good.url)
+        
 
     def test_resource_mismatch(self):
         pass
@@ -175,7 +179,6 @@ class ResourceTestCase(TestCase):
 
 
 ## ------ HELPER FUNCTIONS FOR TEST CASES BELOW -------
-
 
 
 # For testing of staff bios:
