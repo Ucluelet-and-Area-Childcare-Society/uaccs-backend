@@ -148,6 +148,6 @@ class Resource(TimeStampedModel):
         
 
 # User model for future user authentication needs
-class User(AbstractUser):
-    pass        # add when necessary
+# class User(AbstractUser):
+#     pass        # add when necessary
     
