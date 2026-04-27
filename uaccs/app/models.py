@@ -84,11 +84,15 @@ class Child(TimeStampedModel):
 # Resource Model (for generic site resources, i.e. photos, urls etc)
 class Resource(TimeStampedModel):
     """
-    model to store generic website resources that dont fall into above models.
-    Anything like photos, files, URLS, other static web resources on the site.
+    - Model to store generic website resources that dont fall into above models.
+
+    - Anything like photos, files, URLS, other static web resources on the site.
     All file types are optional, but atleast one must be present in object instantiation.
-    A given resource should only be of one type during object instantiation. 
+
+    - A given resource should only be of one type during object instantiation. 
     (i.e. a resource cannot be a url and image at the same time).
+
+    - Resource Type defaults to file.
     """
     RESOURCE_TYPES = [
         ("url", "URL"),
