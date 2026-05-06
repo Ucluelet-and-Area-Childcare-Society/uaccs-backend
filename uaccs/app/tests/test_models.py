@@ -170,10 +170,14 @@ class ResourceTestCase(TestCase):
         
 
     def test_resource_mismatch(self):
-        pass
+        resource = Resource(url = "https://url.com", resource_type = "image")
+        with self.assertRaises(ValidationError):
+            resource.full_clean()
+
 
     def test_empty(self):
-        pass
+        with self.assertRaises(ValidationError):
+        self.empty.full_clean()
 
 
 
