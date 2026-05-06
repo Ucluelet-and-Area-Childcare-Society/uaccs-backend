@@ -177,7 +177,7 @@ class ResourceTestCase(TestCase):
 
     def test_empty(self):
         with self.assertRaises(ValidationError):
-        self.empty.full_clean()
+            self.empty.full_clean()
 
 
 
