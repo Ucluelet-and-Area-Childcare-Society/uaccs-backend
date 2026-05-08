@@ -11,12 +11,14 @@ class StaffSerializer(serializers.ModelSerializer):
         fields = ['name', 'bio', 'email', 'role', 'photo', 'created_at', 'updated_at']
         read_only_fields = ['created_at', 'updated_at']
 
+
 ## Parent Serializer
 class ParentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Parent
         fields = ['name', 'phone_number', 'email', 'created_at', 'updated_at']
         read_only_fields = ['created_at', 'updated_at']
+
 
 ## Child Serializer
 class ChildSerializer(serializers.ModelSerializer):
