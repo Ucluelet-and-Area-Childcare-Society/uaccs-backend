@@ -29,3 +29,11 @@ class ChildSerializer(serializers.ModelSerializer):
         model = Child
         fields = ['name', 'dob', 'starting_date', 'parents', 'created_at', 'updated_at']
         read_only_fields = ['created_at', 'updated_at']
+
+
+## Resource Serializer
+class ResourceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Resource
+        fields = ['description', 'url', 'image', 'file', 'resource_type', 'created_at', 'updated_at']
+        read_only_fields = ['created_at', 'updated_at']
