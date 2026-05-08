@@ -44,7 +44,7 @@ class Staff(TimeStampedModel):
     """
     name = models.CharField(max_length=75)
     bio = models.TextField()
-    email = models.EmailField(max_length=254) # might change to be optional later
+    email = models.EmailField(max_length=254, unique=True) # might change to be optional later
     role = models.CharField(max_length=100) # may make enumeration for predefined choices
     photo = models.ImageField(upload_to='staff/', validators=[validate_resource_size]) # (set up object storage)
 
@@ -62,8 +62,8 @@ class Parent(TimeStampedModel):
         - child(s) names
     """
     name = models.CharField(max_length=75)
-    phone_number = PhoneNumberField()
-    email = models.EmailField(max_length=254)
+    phone_number = PhoneNumberField(unique=True)
+    email = models.EmailField(max_length=254, unique=True)
     # children already specified Child class, no need to redefine
 
     def __str__(self):
