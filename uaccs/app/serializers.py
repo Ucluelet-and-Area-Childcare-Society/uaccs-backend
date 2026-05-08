@@ -17,3 +17,13 @@ class ParentSerializer(serializers.ModelSerializer):
         model = Parent
         fields = ['name', 'phone_number', 'email', 'created_at', 'updated_at']
         read_only_fields = ['created_at', 'updated_at']
+
+## Child Serializer
+class ChildSerializer(serializers.ModelSerializer):
+    # Nested serializer to produce many-to-many relationship
+    parents = ParentSerializer(many = True, read_only = True)
+
+    class Meta:
+        model = Child
+        fields = ['name', 'dob', 'starting_date', 'parents', 'created_at', 'updated_at']
+        read_only_fields = ['created_at', 'updated_at']
