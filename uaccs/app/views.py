@@ -1,6 +1,6 @@
 from rest_framework import viewsets, mixins
-from .models import Staff, Parent, Child, Resource
-from .serializers import StaffSerializer, ParentSerializer, ChildSerializer, ResourceSerializer
+from .models import Staff, Child, Resource
+from .serializers import StaffSerializer, ChildSerializer, ResourceSerializer
 from rest_framework.permissions import IsAdminUser
 from .permissions import ReadOnly
 
@@ -17,7 +17,7 @@ class StaffViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
 
 
-# Resource View Set: Public Download, Private Access
+## Resource View Set: Public Download, Private Access
 class ResourceViewSet(viewsets.ModelViewSet):
     """
     Permission set to IsAdminUserOrReadOnly, CRUD permitted for Admins,
@@ -26,4 +26,6 @@ class ResourceViewSet(viewsets.ModelViewSet):
     queryset = Resource.objects.all()
     serializer_class = ResourceSerializer
     permission_classes = [IsAdminUser | ReadOnly]
+
+
 
