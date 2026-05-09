@@ -1,4 +1,4 @@
-from rest_framework.permissions import BasePermission, IsAdminUser, SAFE_METHODS
+from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 # Custom Permission Logic ReadOnly
 class ReadOnly(BasePermission):
