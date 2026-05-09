@@ -6,3 +6,12 @@ from django.urls import reverse
 
 
 # Test API Request Response cycle
+
+class StaffTest(APITestCase):
+    pass
+
+class RegistrationTest(APITestCase):
+    pass
+
+class ResourceTest(APITestCase):
+    pass
