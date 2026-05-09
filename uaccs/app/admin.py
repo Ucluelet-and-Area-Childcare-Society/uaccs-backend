@@ -13,14 +13,14 @@ class StaffAdmin(admin.ModelAdmin):
 
 @admin.register(Child)
 class ChildAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['name', 'dob', 'starting_date', 'parents']
 
 
 @admin.register(Parent)
 class ParentAdmin(admin.ModelAdmin):
-    pass
+    list_dsiplay = ['name', 'email', 'phone_number']
 
 
 @admin.register(Resource)
 class ResourceAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['resource_type', 'description', 'file', 'image', 'url']
