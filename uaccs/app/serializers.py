@@ -15,7 +15,9 @@ class StaffSerializer(serializers.ModelSerializer):
 
 
 ## Parent Serializer
-class ParentSerializer(serializers.ModelSerializer):
+class ParentSerializer(UniqueFieldsMixin, serializers.ModelSerializer):
+    # UniqueFieldsMixin handles serialization issue with Unique fields in m2m.
+
     class Meta:
         model = Parent
         fields = ['name', 'phone_number', 'email', 'created_at', 'updated_at']
@@ -23,9 +25,9 @@ class ParentSerializer(serializers.ModelSerializer):
 
 
 ## Child Serializer
-class ChildSerializer(serializers.ModelSerializer):
+class ChildSerializer(WritableNestedModelSerializer):
     # Nested serializer to produce many-to-many relationship
-    parents = ParentSerializer(many = True, read_only = True)
+    parents = ParentSerializer(many = True)
 
     class Meta:
         model = Child
