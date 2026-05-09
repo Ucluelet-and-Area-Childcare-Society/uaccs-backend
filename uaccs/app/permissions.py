@@ -1,0 +1,1 @@
+from rest_framework.permissions import BasePermission, IsAdminUser, SAFE_METHODS
