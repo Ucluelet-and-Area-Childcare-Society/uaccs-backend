@@ -2,7 +2,7 @@ from rest_framework import viewsets, mixins
 from .models import Staff, Child, Resource
 from .serializers import StaffSerializer, ChildSerializer, ResourceSerializer
 from rest_framework.permissions import IsAdminUser
-from .permissions import ReadOnly
+from .permissions import ReadOnly, CreateOnly
 
 # Note: Viewset automatically provides: 'list', 'create', 'retrieve', 'update', 'delete' 
 
@@ -28,4 +28,12 @@ class ResourceViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser | ReadOnly]
 
 
-
+## Registration View Set: Public Create (POST), Private Access
+class RegistrationViewSet(viewsets.ModelViewSet):
+    """
+    Permissions set to full CRUD for Admin, only Create for everyone else.
+    m2m serialization handled by ChildSerializer.
+    """
+    queryset = Child.objects.all()
+    serializer_class = ChildSerializer
+    permission_classes = [IsAdminUser | CreateOnly]
