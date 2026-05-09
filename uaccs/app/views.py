@@ -14,3 +14,7 @@ class StaffViewSet(viewsets.ModelViewSet):
     queryset = Staff.objects.all()
     serializer_class = StaffSerializer
     permission_classes = [IsAdminUser]
+
+# Resource View Set: Public Download, Private Access
+class ResourceViewSet(viewsets.ModelViewSet):
+    pass
