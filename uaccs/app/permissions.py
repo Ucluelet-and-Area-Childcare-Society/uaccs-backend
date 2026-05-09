@@ -8,5 +8,5 @@ class ReadOnly(BasePermission):
 
 # Custom Permission CreateOnly
 class CreateOnly(BasePermission):
-    def has_permission(self, request, view):
-        return request.method == 'POST'
+    def has_permission(self, request, view): # type: ignore
+        return request.method in ["POST", "OPTIONS"]
