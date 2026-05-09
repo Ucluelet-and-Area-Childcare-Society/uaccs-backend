@@ -9,11 +9,12 @@ from rest_framework.permissions import IsAdminUser
 class StaffViewSet(viewsets.ModelViewSet):
     """
     permissions set to IsAdminUser, CRUD operations only permitted
-    to Administrators, else throws exception.
+    to Administrators, else throws exception: 403 FORBIDDEN
     """
     queryset = Staff.objects.all()
     serializer_class = StaffSerializer
     permission_classes = [IsAdminUser]
+
 
 # Resource View Set: Public Download, Private Access
 class ResourceViewSet(viewsets.ModelViewSet):
