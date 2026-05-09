@@ -2,9 +2,13 @@ from django.contrib import admin
 from .models import Staff, Child, Parent, Resource
 
 # Register your models here.
+
 """
 Admin Classes specify how models are layed out on Admin site.
 """
+
+class ParentInline(admin.TabularInline):
+    pass
 
 @admin.register(Staff)
 class StaffAdmin(admin.ModelAdmin):
