@@ -96,6 +96,7 @@ class Child(TimeStampedModel):
         if self.dob > self.starting_date:
             raise ValidationError("Starting date cannot be after DOB", code="invalid_start_date")
 
+
 # Resource Model (for generic site resources, i.e. photos, urls etc)
 class Resource(TimeStampedModel):
     """
