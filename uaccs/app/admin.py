@@ -3,27 +3,21 @@ from .models import Staff, Child, Parent, Resource
 
 # Register your models here.
 
-
+@admin.register(Staff)
 class StaffAdmin(admin.ModelAdmin):
     pass
 
-admin.site.register(Staff, StaffAdmin)
 
-
+@admin.register(Child)
 class ChildAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(Child, ChildAdmin)
-
-
+@admin.register(Parent)
 class ParentAdmin(admin.ModelAdmin):
     pass
 
-admin.site.register(Parent, ParentAdmin)
 
-
+@admin.register(Resource)
 class ResourceAdmin(admin.ModelAdmin):
     pass
-
-admin.site.register(Resource, ResourceAdmin)
