@@ -8,7 +8,8 @@ Admin Classes specify how models are layed out on Admin site.
 """
 
 class ParentInline(admin.TabularInline):
-    pass
+    model = Parent
+    extra = 2   # no. of extra forms to display
 
 @admin.register(Staff)
 class StaffAdmin(admin.ModelAdmin):
