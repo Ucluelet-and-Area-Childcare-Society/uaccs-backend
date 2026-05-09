@@ -28,5 +28,5 @@ router.register(r'register', RegistrationViewSet)
 
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('', include(router.urls)),
 ]
