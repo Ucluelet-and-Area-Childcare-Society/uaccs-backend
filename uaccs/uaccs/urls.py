@@ -28,8 +28,9 @@ router.register(r'register', RegistrationViewSet)
 
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', include(router.urls)),
-
+    
     # URL Path to add authentication to browsable api for testing
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework"))
 ]
