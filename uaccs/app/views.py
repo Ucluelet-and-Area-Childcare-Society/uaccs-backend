@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAdminUser
 
 # Note: Viewset automatically provides: 'list', 'create', 'retrieve', 'update', 'delete' 
 
-## Staff View Set
+## Staff View Set: INTERNAL ADMIN ONLY
 class StaffViewSet(viewsets.ModelViewSet):
     """
     permissions set to IsAdminUser, CRUD operations only permitted
