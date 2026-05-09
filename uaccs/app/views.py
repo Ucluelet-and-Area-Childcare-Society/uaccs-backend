@@ -21,8 +21,9 @@ class StaffViewSet(viewsets.ModelViewSet):
 class ResourceViewSet(viewsets.ModelViewSet):
     """
     Permission set to IsAdminUserOrReadOnly, CRUD permitted for Admins,
-    everyone else is ReadOnly.
+    everyone else is ReadOnly (only SAFE_METHODS allowed)
     """
     queryset = Resource.objects.all()
     serializer_class = ResourceSerializer
     permission_classes = [IsAdminUser | ReadOnly]
+
