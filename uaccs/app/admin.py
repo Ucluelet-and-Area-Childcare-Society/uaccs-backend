@@ -19,6 +19,7 @@ class StaffAdmin(admin.ModelAdmin):
 @admin.register(Child)
 class ChildAdmin(admin.ModelAdmin):
     list_display = ['name', 'dob', 'starting_date', 'parents']
+    inlines = [ParentInline]
 
 
 @admin.register(Parent)
