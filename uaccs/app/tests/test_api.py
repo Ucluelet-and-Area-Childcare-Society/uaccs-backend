@@ -20,26 +20,28 @@ class StaffTest(APITestCase):
         User = get_user_model()
         self.url = reverse('staff-list')
         self.admin = User.objects.create_user(username="director", password="password123", is_staff = True)
+        self.non_admin = User.objects.create(username = "non_admin", password = "123")
         self.client = APIClient()
         self.client.force_authenticate(user = self.admin)
 
-    def test_staff_crud(self):
-        data = {
+        self.data = {
             "name": "testStaff",
             "bio": BIO,
             "email": "test@gmail.com",
             "role": "director",
             "photo": generate_img("img.jpeg", (10, 10), "red")
         }
+
+    def test_staff_crud(self):
         # Note: multipart format is needed to handle image files
-        response = self.client.post(self.url, data, format = "multipart")
+        response = self.client.post(self.url, self.data, format = "multipart")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Staff.objects.count(), 1)
         self.assertEqual(Staff.objects.get().name, "testStaff") 
     
     def test_non_admin_failure(self):
         pass
-
+        
     
         
 
