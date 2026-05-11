@@ -82,21 +82,21 @@ class RegistrationTest(APITestCase):
 
         data = child_payload = {
             "name": "Tommy Pickles",
-        "dob": "2024-01-01",
-        "starting_date": "2026-09-01",
-        "parents": [
-            {
+            "dob": "2024-01-01",
+            "starting_date": "2026-09-01",
+            "parents": [
+                {
                 "name": "Stu Pickles",
                 "phone_number": "555-0123",
                 "email": "stu@inventor.com"
-            },
-            {
+                },
+                {
                 "name": "Didi Pickles",
                 "phone_number": "555-0456",
                 "email": "didi@psych.com"
-            }
-    ]
-}
+                }
+            ]
+        }
     
     def test_parent_create_only(self):
         pass
