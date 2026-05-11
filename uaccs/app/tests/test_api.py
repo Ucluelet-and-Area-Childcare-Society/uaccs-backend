@@ -20,7 +20,7 @@ class StaffTest(APITestCase):
         User = get_user_model()
         self.url = reverse('staff-list')
         self.admin = User.objects.create_user(username="director", password="password123", is_staff = True)
-        
+
         # mimics a normal user interacting with site
         self.non_admin = User.objects.create_user(username = "non_admin", password = "123")
         self.client = APIClient()
@@ -77,7 +77,12 @@ class RegistrationTest(APITestCase):
 
         # mimics a normal user interacting with site
         self.non_admin = User.objects.create_user(username = "non_admin", password = "123")
+    
+    def test_parent_create_only(self):
+        pass
 
+    def test_admin_full_crud(self):
+        pass
 
 
 class ResourceTest(APITestCase):
