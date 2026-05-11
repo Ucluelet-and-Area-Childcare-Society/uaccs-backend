@@ -74,35 +74,79 @@ class RegistrationTest(APITestCase):
         User = get_user_model()
         self.url = reverse("child-list")
         self.client = APIClient()
-        self.client.force_authenticate(user = self.admin)
         self.admin = User.objects.create_user(username="director", password="password123", is_staff = True)
+        self.client.force_authenticate(user = self.admin)
 
         # mimics a normal user interacting with site
         self.non_admin = User.objects.create_user(username = "non_admin", password = "123")
 
-        data = child_payload = {
+        self.data = {
             "name": "Tommy Pickles",
             "dob": "2024-01-01",
             "starting_date": "2026-09-01",
             "parents": [
                 {
                 "name": "Stu Pickles",
-                "phone_number": "555-0123",
+                "phone_number": "+16502530000",
                 "email": "stu@inventor.com"
                 },
                 {
                 "name": "Didi Pickles",
-                "phone_number": "555-0456",
+                "phone_number": "+12345678900",
                 "email": "didi@psych.com"
                 }
             ]
         }
     
     def test_parent_create_only(self):
-        pass
-
+        # only POST should work
+        self.client.force_authenticate(user = self.non_admin)   # type: ignore
+        response = self.client.post(self.url, self.data, format = "json")
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Child.objects.count(), 1)
+        self.assertEqual(Parent.objects.count(), 2)
+        parent = Parent.objects.get(name = "Stu Pickles")
+        self.assertTrue(parent.children.filter(name = "Tommy Pickles").exists())    # type: ignore
+        
+        # Any other Request should fail
+        get = self.client.get(self.url)
+        self.assertEqual(get.status_code, status.HTTP_403_FORBIDDEN)
+        
+        delete = self.client.delete(self.url)
+        self.assertEqual(delete.status_code, status.HTTP_403_FORBIDDEN)
+        
+        put = self.client.put(self.url, self.data, format = "json") # replacing with same data here but should still fail
+        self.assertEqual(put.status_code, status.HTTP_403_FORBIDDEN)
+        
     def test_admin_full_crud(self):
-        pass
+        # All CRUD operations should succeed
+        # if POST works without admin, will work with it, no need to retest
+        self.client.force_authenticate(user = self.admin)  # type: ignore
+        response = self.client.post(self.url, self.data, format = "json")
+        
+        get = self.client.get(self.url)
+        self.assertEqual(get.status_code, status.HTTP_200_OK)
+        
+        new_data = {
+            "name": "Tommy Pickles",
+            "dob": "2025-01-01",
+            "starting_date": "2026-11-01",
+            "parents": [
+                {
+                "name": "Stu Pickles",
+                "phone_number": "+16502530000",
+                "email": "stu@inventor.com"
+                },
+            ]
+        }
+        # child = Child.objects.get(name = "Tommy Pickles")
+        # patch_url = reverse("child-detail", kwargs={"pk": child.pk})
+        # patch = self.client.put(patch_url, new_data, format = "json")
+        # self.assertEqual(patch.status_code, status.HTTP_200_OK)
+        
+        
+        
+        
 
 
 class ResourceTest(APITestCase):
