@@ -38,6 +38,19 @@ class StaffTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Staff.objects.count(), 1)
         self.assertEqual(Staff.objects.get().name, "testStaff") 
+
+        # test PATCH (Partial Update):
+        staff = Staff.objects.create(name="staff", bio=BIO, email="staff@gmail.com", 
+                                     role="admin", photo=generate_img("i.jpeg", (1, 1), "blue"))
+        patch = {"role": "assistant"}
+        patch_url = reverse("staff-detail", kwargs= {'pk': staff.pk})
+        patch_response = self.client.patch(patch_url, patch, format = "json")
+        self.assertEqual(patch_response.status_code, status.HTTP_200_OK)
+
+        # Refresh and Verify
+        staff.refresh_from_db()
+        self.assertEqual(staff.role, "assistant")
+        self.assertEqual(staff.name, "staff")
     
     def test_non_admin_failure(self):
         # attempt GET and POST
@@ -46,7 +59,8 @@ class StaffTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         get = self.client.get(self.url)
         self.assertEqual(get.status_code, status.HTTP_403_FORBIDDEN)
-        
+
+
     
         
 
