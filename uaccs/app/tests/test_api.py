@@ -15,12 +15,12 @@ class StaffTest(APITestCase):
     """Staff tests need to check, with correct HTTP status codes:
         - Admin can CRUD staff
         - Non-admin cannot CRUD staff
-        - serialization is correct (i.e correct data is passed)"""
+    """
     def setUp(self):
         User = get_user_model()
         self.url = reverse('staff-list')
         self.admin = User.objects.create_user(username="director", password="password123", is_staff = True)
-        self.non_admin = User.objects.create(username = "non_admin", password = "123")
+        self.non_admin = User.objects.create_user(username = "non_admin", password = "123")
         self.client = APIClient()
         self.client.force_authenticate(user = self.admin)
 
