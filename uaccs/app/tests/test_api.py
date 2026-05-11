@@ -40,7 +40,12 @@ class StaffTest(APITestCase):
         self.assertEqual(Staff.objects.get().name, "testStaff") 
     
     def test_non_admin_failure(self):
-        pass
+        # attempt GET and POST
+        self.client.force_authenticate(user = self.non_admin)   # type: ignore # change auth to non_admin
+        response = self.client.post(self.url, self.data, format = "multipart")
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        get = self.client.get(self.url)
+        self.assertEqual(get.status_code, status.HTTP_403_FORBIDDEN)
         
     
         
