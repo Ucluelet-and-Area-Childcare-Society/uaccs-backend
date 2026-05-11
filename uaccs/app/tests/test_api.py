@@ -73,10 +73,30 @@ class RegistrationTest(APITestCase):
     def setUp(self):
         User = get_user_model()
         self.url = reverse("child-list")
+        self.client = APIClient()
+        self.client.force_authenticate(user = self.admin)
         self.admin = User.objects.create_user(username="director", password="password123", is_staff = True)
 
         # mimics a normal user interacting with site
         self.non_admin = User.objects.create_user(username = "non_admin", password = "123")
+
+        data = child_payload = {
+            "name": "Tommy Pickles",
+        "dob": "2024-01-01",
+        "starting_date": "2026-09-01",
+        "parents": [
+            {
+                "name": "Stu Pickles",
+                "phone_number": "555-0123",
+                "email": "stu@inventor.com"
+            },
+            {
+                "name": "Didi Pickles",
+                "phone_number": "555-0456",
+                "email": "didi@psych.com"
+            }
+    ]
+}
     
     def test_parent_create_only(self):
         pass
