@@ -126,6 +126,7 @@ class RegistrationTest(APITestCase):
         
         get = self.client.get(self.url)
         self.assertEqual(get.status_code, status.HTTP_200_OK)
+        parent = Parent.objects.get(phone_number = "+16502530000")
         
         new_data = {
             "name": "Tommy Pickles",
@@ -133,16 +134,29 @@ class RegistrationTest(APITestCase):
             "starting_date": "2026-11-01",
             "parents": [
                 {
+                "id": parent.id,    
                 "name": "Stu Pickles",
                 "phone_number": "+16502530000",
                 "email": "stu@inventor.com"
                 },
             ]
         }
-        # child = Child.objects.get(name = "Tommy Pickles")
-        # patch_url = reverse("child-detail", kwargs={"pk": child.pk})
-        # patch = self.client.put(patch_url, new_data, format = "json")
-        # self.assertEqual(patch.status_code, status.HTTP_200_OK)
+        child = Child.objects.get(name = 'Tommy Pickles')
+        put_url = reverse('child-detail', kwargs = {"pk": child.pk})
+        put = self.client.put(put_url, new_data, format = "json")
+        self.assertEqual(put.status_code, status.HTTP_200_OK)
+        
+        child.refresh_from_db()
+        self.assertEqual(child.parents.count(), 1)  # note PUT/ PATCH does not delete from db
+        self.assertEqual(str(child.dob), "2025-01-01")   # instead of 2024-01-01
+        
+        # Note: Delete Parents if NO CHILD LINKED??
+        
+        delete_url = reverse('child-detail', kwargs = {"pk": child.pk})
+        delete = self.client.delete(delete_url)
+        self.assertEqual(delete.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(Child.objects.filter(name = "Tommy Pickles").exists())
+        
         
         
         
