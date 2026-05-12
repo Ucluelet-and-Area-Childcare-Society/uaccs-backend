@@ -158,13 +158,26 @@ class RegistrationTest(APITestCase):
         self.assertFalse(Child.objects.filter(name = "Tommy Pickles").exists())
         
         
-        
-        
-        
+         
 
 
 class ResourceTest(APITestCase):
-    pass
+    """Resource tests need to check:
+        - Admin Full CRUD
+        - Non-Admin no permissions (Get Only)"""
+    def setUp(self):
+        User = get_user_model()
+        self.url = reverse('resource-list')
+        self.client = APIClient()
+        self.admin = User.objects.create(name = "admin", password = "123", is_staff = True)
+        self.non_admin = User.objects.create(name = "non-admin", password = "123")
+        self.client.force_authenticate(user = self.admin)
+        
+        self.data = {
+                "description": "Official daycare website",
+                "url": "https://example.com",
+                "resource_type": "url"
+            }
 
 
 # delete temp directory
