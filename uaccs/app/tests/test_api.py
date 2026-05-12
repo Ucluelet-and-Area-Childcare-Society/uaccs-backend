@@ -177,7 +177,13 @@ class ResourceTest(APITestCase):
                 "description": "Official daycare website",
                 "url": "https://example.com",
                 "resource_type": "url"
-            }
+        }
+    
+    def test_non_admin_get_only(self):
+        pass
+    
+    def test_admin_crud(self):
+        pass
 
 
 # delete temp directory
