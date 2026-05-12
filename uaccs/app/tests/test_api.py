@@ -134,7 +134,7 @@ class RegistrationTest(APITestCase):
             "starting_date": "2026-11-01",
             "parents": [
                 {
-                "id": parent.id,    
+                "id": parent.id,            # type: ignore   
                 "name": "Stu Pickles",
                 "phone_number": "+16502530000",
                 "email": "stu@inventor.com"
