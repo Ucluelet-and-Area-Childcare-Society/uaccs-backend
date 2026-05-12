@@ -207,6 +207,32 @@ class ResourceTest(APITestCase):
         self.assertEqual(delete.status_code, status.HTTP_403_FORBIDDEN)
         
     def test_admin_crud(self):
+        self.client.force_authenticate(self.admin)  # type: ignore
+        
+        # POST Passes
+        response = self.client.post(self.url, self.data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        
+        # GET Passes
+        get = self.client.get(self.url)
+        self.assertEqual(get.status_code, status.HTTP_200_OK)
+        
+        # PATCH / PUT Passes
+        patch_data =  {
+            "description": "new description..."
+        }
+        resource = Resource.objects.get(url = "https://example.com") # works since only one resource has been created
+        patch_url = reverse('resource-detail', kwargs = {"pk": resource.pk})
+        patch = self.client.patch(patch_url, patch_data)
+        resource.refresh_from_db()
+        self.assertEqual(patch.status_code, status.HTTP_200_OK)
+        self.assertEqual(resource.description, "new description...")  
+        self.assertEqual(resource.url, "https://example.com")
+        
+        # DELETE Passes
+        delete = self.client.delete(patch_url)
+        self.assertEqual(delete.status_code, status.HTTP_204_NO_CONTENT)
+        
         
 
 
