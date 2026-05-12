@@ -169,8 +169,8 @@ class ResourceTest(APITestCase):
         User = get_user_model()
         self.url = reverse('resource-list')
         self.client = APIClient()
-        self.admin = User.objects.create(name = "admin", password = "123", is_staff = True)
-        self.non_admin = User.objects.create(name = "non-admin", password = "123")
+        self.admin = User.objects.create(username = "admin", password = "123", is_staff = True)
+        self.non_admin = User.objects.create(username = "non-admin", password = "123")
         self.client.force_authenticate(user = self.admin)
         
         self.data = {
@@ -180,10 +180,34 @@ class ResourceTest(APITestCase):
         }
     
     def test_non_admin_get_only(self):
-        pass
-    
+        init = self.client.post(self.url, self.data)    # initial POST for PATCH/PUT test
+        self.client.force_authenticate(self.non_admin)  #type: ignore
+        # GET Passes
+        get = self.client.get(self.url)
+        self.assertEqual(get.status_code, status.HTTP_200_OK)
+        
+        # POST Fails
+        response = self.client.post(self.url, self.data)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        
+        # PATCH / PUT Fails (test one)
+        patch_data =  {
+            "description": "new description..."
+        }
+        resource = Resource.objects.get(url = "https://example.com") # works since only one resource has been created
+        patch_url = reverse('resource-detail', kwargs = {"pk": resource.pk})
+        patch = self.client.patch(patch_url, patch_data)
+        resource.refresh_from_db()
+        self.assertEqual(patch.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(resource.description, "Official daycare website")  # didnt change!
+        self.assertEqual(resource.url, "https://example.com")
+        
+        # DELETE Fails
+        delete = self.client.delete(patch_url)
+        self.assertEqual(delete.status_code, status.HTTP_403_FORBIDDEN)
+        
     def test_admin_crud(self):
-        pass
+        
 
 
 # delete temp directory
