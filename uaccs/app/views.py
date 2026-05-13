@@ -47,10 +47,29 @@ class RegistrationViewSet(viewsets.ModelViewSet):
         # Save instance to db:
         instance = serializer.save()
         recipient = os.getenv('EMAIL_RECIPIENT', "")
+        parents = instance.parents.all()
+
         # send mail with waitlist information...
-        send_mail(
-            subject = "New Waitlist Entry",
-            message = "Test message....",
-            from_email = os.getenv('EMAIL_SENDER'),
-            recipient_list= [recipient],     
+        subject = f"New Waitlist Entry: {instance.name}"
+        message = ( f"CHILD INFORMATION:\n\n"
+                     f"Name: {instance.name}\n"
+                     f"DOB: {instance.dob}\n"
+                     f"Starting Date: {instance.starting_date}\n"
+                     f"{"=" * 20}\n\n" # visual seperator
         )
+        for i, parent in enumerate(parents, 1):
+            message += (
+                f"PARENT {i} INFORMATION:\n\n"
+                f"Name: {parent.name}\n"
+                f"Email: {parent.email}\n"
+                f"Phone Number: {parent.phone_number}\n"
+                f"{"=" * 20}\n\n" # visual seperator
+            )
+        
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=os.getenv('EMAIL_SENDER'),
+            recipient_list=[recipient]
+        )
+
