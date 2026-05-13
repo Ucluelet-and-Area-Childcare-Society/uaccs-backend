@@ -37,3 +37,8 @@ class RegistrationViewSet(viewsets.ModelViewSet):
     queryset = Child.objects.all()
     serializer_class = ChildSerializer
     permission_classes = [IsAdminUser | CreateOnly]
+
+    def perform_create(self, serializer):
+        super().perform_create(serializer)
+
+        # send mail with waitlist information...
