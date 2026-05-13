@@ -4,6 +4,10 @@ from .serializers import StaffSerializer, ChildSerializer, ResourceSerializer
 from rest_framework.permissions import IsAdminUser
 from .permissions import ReadOnly, CreateOnly
 from django.core.mail import send_mail
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Note: Viewset automatically provides: 'list', 'create', 'retrieve', 'update', 'delete' 
 
@@ -42,11 +46,11 @@ class RegistrationViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         # Save instance to db:
         instance = serializer.save()
-
+        recipient = os.getenv('EMAIL_RECIPIENT', "")
         # send mail with waitlist information...
         send_mail(
             subject = "New Waitlist Entry",
-            message = "message",
-            from_email = "email",
-            recipient_list= ["email"],     
+            message = "Test message....",
+            from_email = os.getenv('EMAIL_SENDER'),
+            recipient_list= [recipient],     
         )
