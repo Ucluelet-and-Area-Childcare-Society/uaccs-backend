@@ -44,3 +44,9 @@ class RegistrationViewSet(viewsets.ModelViewSet):
         instance = serializer.save()
 
         # send mail with waitlist information...
+        send_mail(
+            subject = "New Waitlist Entry",
+            message = "message",
+            from_email = "email",
+            recipient_list= ["email"],     
+        )
