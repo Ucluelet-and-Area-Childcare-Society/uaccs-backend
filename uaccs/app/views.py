@@ -3,6 +3,7 @@ from .models import Staff, Child, Resource
 from .serializers import StaffSerializer, ChildSerializer, ResourceSerializer
 from rest_framework.permissions import IsAdminUser
 from .permissions import ReadOnly, CreateOnly
+from django.core.mail import send_mail
 
 # Note: Viewset automatically provides: 'list', 'create', 'retrieve', 'update', 'delete' 
 
@@ -39,6 +40,7 @@ class RegistrationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser | CreateOnly]
 
     def perform_create(self, serializer):
-        super().perform_create(serializer)
+        # Save instance to db:
+        instance = serializer.save()
 
         # send mail with waitlist information...
